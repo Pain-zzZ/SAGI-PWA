@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generar Comprobante - SAGI</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="icon" href="../resources/favicon.ico" type="image/x-icon" />
+</head>
+<body class="dashboard">
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar" role="navigation">
+    <div class="sidebar-header">
+      <h2>SAGI</h2>
+      <button id="closeMenu" class="close-btn" aria-label="Cerrar menú">✖</button>
+    </div>
+
+    <ul class="menu">
+      <li><a href="menu.html" class="menu-home">🏠 Inicio</a></li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">📋 Inventario</a>
+        <ul class="submenu">
+          <li><a href="products.html">📦 Ver productos</a></li>
+          <li><a href="add-product.html">➕ Añadir producto</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🔄 Movimientos</a>
+        <ul class="submenu">
+          <li><a href="movements.html">📊 Ver movimientos</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🧾 Comprobantes</a>
+        <ul class="submenu">
+          <li><a href="receipts.html">📄 Ver comprobantes</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🤝 Proveedores</a>
+        <ul class="submenu">
+          <li><a href="providers.html">📋 Ver proveedores</a></li>
+          <li><a href="add-provider.html">➕ Añadir proveedor</a></li>
+        </ul>
+      </li>
+      <li><a href="users.html">👥 Usuarios</a></li>
+      <li><a href="roles.html">🔐 Roles y Permisos</a></li>
+    </ul>
+
+    <button id="logout" aria-label="Cerrar sesión">🚪 Cerrar sesión</button>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="main-content">
+    <header>
+      <button id="openMenu" class="menu-btn" aria-label="Abrir menú">☰</button>
+      <h1>➕ Generar Comprobante</h1>
+      <p>Crea facturas, recibos y notas de crédito/débito</p>
+    </header>
+
+    <section class="content">
+      <!-- Información -->
+      <div class="card info-card">
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <div style="font-size: 2.5rem;">ℹ️</div>
+          <div>
+            <h3 style="margin: 0 0 5px 0; color: #1b263b;">Tipos de comprobantes</h3>
+            <ul style="margin: 5px 0; padding-left: 20px; color: #666;">
+              <li><strong>Factura de Venta:</strong> Documento de venta de productos a clientes</li>
+              <li><strong>Factura de Compra:</strong> Registro de compras a proveedores</li>
+              <li><strong>Recibo:</strong> Comprobante de pago recibido</li>
+              <li><strong>Nota de Crédito:</strong> Devolución o descuento al cliente</li>
+              <li><strong>Nota de Débito:</strong> Cargo adicional al cliente</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulario -->
+      <div class="card form-card">
+        <div class="form-header">
+          <h2>📝 Datos del Comprobante</h2>
+          <p style="color: #666; margin: 5px 0 0 0;">El número se generará automáticamente</p>
+        </div>
+
+        <form id="addReceiptForm" class="formulario">
+          
+          <!-- Tipo de comprobante -->
+          <div class="form-group">
+            <label for="tipo">
+              <span class="required-star">*</span>
+              📑 Tipo de comprobante:
+            </label>
+            <select id="tipo" name="tipo" required class="filter-select">
+              <option value="">Selecciona un tipo...</option>
+              <option value="factura_venta">📤 Factura de Venta</option>
+              <option value="factura_compra">📥 Factura de Compra</option>
+              <option value="recibo">🧾 Recibo</option>
+              <option value="nota_credito">📝 Nota de Crédito</option>
+              <option value="nota_debito">📝 Nota de Débito</option>
+            </select>
+          </div>
+
+          <!-- Cliente/Proveedor -->
+          <div class="form-row">
+            <div class="form-group" id="clienteGroup">
+              <label for="nombreCliente">
+                <span class="required-star">*</span>
+                👤 Nombre del cliente:
+              </label>
+              <input 
+                type="text" 
+                id="nombreCliente" 
+                class="filter-input"
+                placeholder="Ej: Juan Pérez"
+              />
+            </div>
+
+            <div class="form-group" id="proveedorGroup" style="display: none;">
+              <label for="proveedor">
+                <span class="required-star">*</span>
+                🏢 Proveedor:
+              </label>
+              <select id="proveedor" class="filter-select">
+                <option value="">Selecciona un proveedor...</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="documentoCliente">
+                📄 Documento (opcional):
+              </label>
+              <input 
+                type="text" 
+                id="documentoCliente" 
+                class="filter-input"
+                placeholder="CC, NIT, RUT..."
+              />
+            </div>
+          </div>
+
+          <!-- Productos -->
+          <div class="productos-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+              <h3 style="margin: 0;">🛒 Productos/Servicios</h3>
+              <button type="button" id="addProductBtn" class="btn-add-product">
+                ➕ Agregar Producto
+              </button>
+            </div>
+
+            <div id="productosContainer">
+              <!-- Se llenarán dinámicamente -->
+            </div>
+          </div>
+
+          <!-- Totales -->
+          <div class="totales-section">
+            <div class="total-row">
+              <span>Subtotal:</span>
+              <strong id="subtotalDisplay">$0.00</strong>
+            </div>
+            <div class="total-row">
+              <span>Impuestos (IVA 19%):</span>
+              <strong id="impuestosDisplay">$0.00</strong>
+            </div>
+            <div class="total-row total-final">
+              <span>TOTAL:</span>
+              <strong id="totalDisplay">$0.00</strong>
+            </div>
+          </div>
+
+          <!-- Observaciones -->
+          <div class="form-group">
+            <label for="observaciones">
+              📝 Observaciones:
+            </label>
+            <textarea 
+              id="observaciones" 
+              class="filter-input"
+              rows="3"
+              placeholder="Notas adicionales, condiciones de pago, etc."
+            ></textarea>
+          </div>
+
+          <p id="error-msg" class="error" style="display: none;"></p>
+
+          <!-- Botones -->
+          <div class="form-actions">
+            <button type="submit" class="btn-submit">
+              <span class="btn-icon">💾</span>
+              Generar Comprobante
+            </button>
+            <a href="receipts.html" class="btn-cancel">
+              <span class="btn-icon">❌</span>
+              Cancelar
+            </a>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/menu.js"></script>
+  <script src="../js/add-receipt.js"></script>
+</body>
+</html>

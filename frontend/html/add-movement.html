@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registrar Movimiento - SAGI</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="icon" href="../resources/favicon.ico" type="image/x-icon" />
+</head>
+<body class="dashboard">
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar" role="navigation">
+    <div class="sidebar-header">
+      <h2>SAGI</h2>
+      <button id="closeMenu" class="close-btn" aria-label="Cerrar menú">✖</button>
+    </div>
+
+    <ul class="menu">
+      <li><a href="menu.html" class="menu-home">🏠 Inicio</a></li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">📋 Inventario</a>
+        <ul class="submenu">
+          <li><a href="products.html">📦 Ver productos</a></li>
+          <li><a href="add-product.html">➕ Añadir producto</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🔄 Movimientos</a>
+        <ul class="submenu">
+          <li><a href="movements.html">📊 Ver movimientos</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🧾 Comprobantes</a>
+        <ul class="submenu">
+          <li><a href="receipts.html">📄 Ver comprobantes</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🤝 Proveedores</a>
+        <ul class="submenu">
+          <li><a href="providers.html">📋 Ver proveedores</a></li>
+          <li><a href="add-provider.html">➕ Añadir proveedor</a></li>
+        </ul>
+      </li>
+      <li><a href="users.html">👥 Usuarios</a></li>
+      <li><a href="roles.html">🔐 Roles y Permisos</a></li>
+    </ul>
+
+    <button id="logout" aria-label="Cerrar sesión">🚪 Cerrar sesión</button>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="main-content">
+    <header>
+      <button id="openMenu" class="menu-btn" aria-label="Abrir menú">☰</button>
+      <h1>➕ Registrar Movimiento Manual</h1>
+      <p>Registra entradas, salidas o ajustes de inventario con trazabilidad completa</p>
+    </header>
+
+    <section class="content">
+      <!-- Información importante -->
+      <div class="card info-card">
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <div style="font-size: 2.5rem;">ℹ️</div>
+          <div>
+            <h3 style="margin: 0 0 5px 0; color: #1b263b;">¿Cuándo usar cada tipo?</h3>
+            <ul style="margin: 5px 0; padding-left: 20px; color: #666;">
+              <li><strong>📥 Entrada:</strong> Compras a proveedores, devoluciones de clientes</li>
+              <li><strong>📤 Salida:</strong> Ventas, consumo interno, pérdidas, mermas</li>
+              <li><strong>⚖️ Ajuste:</strong> Correcciones de inventario, conteos físicos</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulario principal -->
+      <div class="card form-card">
+        <div class="form-header">
+          <h2>📝 Datos del Movimiento</h2>
+          <p style="color: #666; margin: 5px 0 0 0;">Completa la información requerida</p>
+        </div>
+
+        <form id="addMovementForm" class="formulario">
+          
+          <!-- Selector de producto con información -->
+          <div class="form-group">
+            <label for="producto">
+              <span class="required-star">*</span>
+              📦 Producto:
+            </label>
+            <select id="producto" name="producto" required class="filter-select">
+              <option value="">Selecciona un producto...</option>
+            </select>
+          </div>
+
+          <!-- Card de información del producto seleccionado -->
+          <div id="productoInfo" class="producto-info-card" style="display: none;">
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="info-label">Stock actual:</span>
+                <span class="info-value" id="stockActualValue">-</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Stock mínimo:</span>
+                <span class="info-value" id="stockMinimoValue">-</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Estado:</span>
+                <span class="info-value" id="estadoValue">-</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Categoría:</span>
+                <span class="info-value" id="categoriaValue">-</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tipo de movimiento -->
+          <div class="form-group">
+            <label for="tipo">
+              <span class="required-star">*</span>
+              🔄 Tipo de movimiento:
+            </label>
+            <select id="tipo" name="tipo" required class="filter-select tipo-select">
+              <option value="">Selecciona un tipo...</option>
+              <option value="entrada" data-icon="📥" data-color="#4caf50">📥 Entrada (Agregar stock)</option>
+              <option value="salida" data-icon="📤" data-color="#e63946">📤 Salida (Retirar stock)</option>
+              <option value="ajuste" data-icon="⚖️" data-color="#ff9800">⚖️ Ajuste (Corrección manual)</option>
+            </select>
+          </div>
+
+          <!-- Cantidad con validación visual -->
+          <div class="form-group">
+            <label for="cantidad">
+              <span class="required-star">*</span>
+              🔢 Cantidad:
+            </label>
+            <div style="position: relative;">
+              <input 
+                type="number" 
+                id="cantidad" 
+                name="cantidad" 
+                min="1" 
+                required 
+                class="filter-input"
+                placeholder="Ingresa la cantidad..."
+              />
+              <span id="cantidadHelper" class="input-helper"></span>
+            </div>
+            <small id="stockWarning" class="warning-text" style="display: none;">
+              ⚠️ La cantidad supera el stock disponible
+            </small>
+          </div>
+
+          <!-- Vista previa del resultado -->
+          <div id="resultadoPreview" class="resultado-preview" style="display: none;">
+            <div class="preview-header">
+              <span>📊 Vista Previa del Resultado</span>
+            </div>
+            <div class="preview-content">
+              <div class="preview-item">
+                <span>Stock actual:</span>
+                <strong id="previewStockActual">-</strong>
+              </div>
+              <div class="preview-arrow">→</div>
+              <div class="preview-item">
+                <span>Stock final:</span>
+                <strong id="previewStockFinal" class="preview-final">-</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Descripción -->
+          <div class="form-group">
+            <label for="descripcion">
+              📝 Descripción / Motivo:
+            </label>
+            <textarea 
+              id="descripcion" 
+              name="descripcion" 
+              rows="3" 
+              class="filter-input"
+              placeholder="Ej: Compra a proveedor X, venta al cliente Y, pérdida por vencimiento, ajuste por conteo físico, etc."
+            ></textarea>
+            <small style="color: #666;">Opcional pero recomendado para trazabilidad</small>
+          </div>
+
+          <p id="error-msg" class="error" style="display: none;"></p>
+
+          <!-- Botones de acción -->
+          <div class="form-actions">
+            <button type="submit" class="btn-guardar btn-submit">
+              <span class="btn-icon">💾</span>
+              Registrar Movimiento
+            </button>
+            <a href="movements.html" class="btn-cancel">
+              <span class="btn-icon">❌</span>
+              Cancelar
+            </a>
+          </div>
+        </form>
+      </div>
+
+      <!-- Tips adicionales -->
+      <div class="card tips-card">
+        <h3 style="margin: 0 0 10px 0; color: #1b263b;">💡 Consejos</h3>
+        <ul style="margin: 0; padding-left: 20px; color: #666; line-height: 1.8;">
+          <li>Verifica bien el producto y la cantidad antes de confirmar</li>
+          <li>Las salidas no pueden superar el stock disponible</li>
+          <li>Agrega una descripción clara para facilitar auditorías futuras</li>
+          <li>Todos los movimientos quedan registrados con fecha, hora y usuario</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/menu.js"></script>
+  <script src="../js/add-movement.js"></script>
+</body>
+</html>

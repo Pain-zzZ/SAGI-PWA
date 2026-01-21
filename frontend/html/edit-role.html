@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Editar Rol - SAGI</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="icon" href="../resources/favicon.ico" type="image/x-icon" />
+</head>
+<body class="dashboard">
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar" role="navigation">
+    <div class="sidebar-header">
+      <h2>SAGI</h2>
+      <button id="closeMenu" class="close-btn" aria-label="Cerrar menú">✖</button>
+    </div>
+
+    <ul class="menu">
+      <li><a href="menu.html" class="menu-home">🏠 Inicio</a></li>
+      
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">📋 Inventario</a>
+        <ul class="submenu">
+          <li><a href="products.html">📦 Ver productos</a></li>
+          <li><a href="add-product.html">➕ Añadir producto</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🔄 Movimientos</a>
+        <ul class="submenu">
+          <li><a href="movements.html">📊 Ver movimientos</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🧾 Comprobantes</a>
+        <ul class="submenu">
+          <li><a href="receipts.html">📄 Ver comprobantes</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🤝 Proveedores</a>
+        <ul class="submenu">
+          <li><a href="providers.html">📋 Ver proveedores</a></li>
+          <li><a href="add-provider.html">➕ Añadir proveedor</a></li>
+        </ul>
+      </li>
+      <li><a href="users.html">👥 Usuarios</a></li>
+      <li><a href="roles.html">🔐 Roles y Permisos</a></li>
+    </ul>
+
+    <button id="logout" aria-label="Cerrar sesión">🚪 Cerrar sesión</button>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="main-content">
+    <header>
+      <button id="openMenu" class="menu-btn" aria-label="Abrir menú">☰</button>
+      <h1 id="pageTitle">✏️ Editar Rol</h1>
+      <p>Modifica el nombre y descripción del rol</p>
+    </header>
+
+    <section class="content">
+      <!-- Información -->
+      <div class="card info-card">
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <div style="font-size: 2.5rem;">ℹ️</div>
+          <div>
+            <h3 style="margin: 0 0 5px 0; color: #1b263b;">Información importante</h3>
+            <ul style="margin: 5px 0; padding-left: 20px; color: #666;">
+              <li>Solo puedes editar el nombre y la descripción del rol</li>
+              <li>Los permisos están predefinidos y no se pueden modificar desde aquí</li>
+              <li>Los cambios afectarán a todos los usuarios con este rol asignado</li>
+              <li>El nombre del rol debe ser descriptivo y fácil de entender</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulario -->
+      <div class="card form-card">
+        <div class="form-header">
+          <h2>📝 Datos del Rol</h2>
+          <p style="color: #666; margin: 5px 0 0 0;">Completa la información requerida</p>
+        </div>
+
+        <form id="editRoleForm" class="formulario">
+          
+          <!-- Nombre -->
+          <div class="form-group">
+            <label for="nombre">
+              <span class="required-star">*</span>
+              🔐 Nombre del rol:
+            </label>
+            <input 
+              type="text" 
+              id="nombre" 
+              name="nombre" 
+              class="filter-input"
+              placeholder="Ej: Administrador"
+              required 
+            />
+          </div>
+
+          <!-- Descripción -->
+          <div class="form-group">
+            <label for="descripcion">
+              📝 Descripción:
+            </label>
+            <textarea 
+              id="descripcion" 
+              name="descripcion" 
+              class="filter-input"
+              rows="4"
+              placeholder="Describe las responsabilidades y alcance de este rol..."
+            ></textarea>
+            <small style="color: #666; display: block; margin-top: 5px;">
+              Una buena descripción ayuda a asignar el rol correcto a cada usuario
+            </small>
+          </div>
+
+          <p id="error-msg" class="error" style="display: none;"></p>
+
+          <!-- Botones -->
+          <div class="form-actions">
+            <button type="submit" class="btn-submit" id="submitBtn">
+              <span class="btn-icon">💾</span>
+              Guardar Cambios
+            </button>
+            <a href="roles.html" class="btn-cancel">
+              <span class="btn-icon">❌</span>
+              Cancelar
+            </a>
+          </div>
+        </form>
+      </div>
+
+      <!-- Vista previa de permisos (solo lectura) -->
+      <div class="card" id="permisosCard" style="display: none;">
+        <h3 style="margin: 0 0 15px 0; color: #1b263b;">🔑 Permisos de este rol</h3>
+        <p style="color: #666; margin-bottom: 15px; font-size: 0.9rem;">
+          Los permisos son predefinidos y no se pueden modificar. Si necesitas cambiar los permisos, considera crear un nuevo rol personalizado.
+        </p>
+        <div id="permisosPreview" style="background: #f5f5f5; padding: 15px; border-radius: 8px;">
+          <p style="text-align: center; color: #666;">Cargando permisos...</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/menu.js"></script>
+  <script src="../js/edit-role.js"></script>
+</body>
+</html>

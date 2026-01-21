@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Añadir Producto - SAGI</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="icon" href="../resources/favicon.ico" type="image/x-icon" />
+</head>
+<body class="dashboard">
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar" role="navigation">
+    <div class="sidebar-header">
+      <h2>SAGI</h2>
+      <button id="closeMenu" class="close-btn" aria-label="Cerrar menú">✖</button>
+    </div>
+
+    <ul class="menu">
+      <li><a href="menu.html" class="menu-home">🏠 Inicio</a></li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">📋 Inventario</a>
+        <ul class="submenu">
+          <li><a href="products.html">📦 Ver productos</a></li>
+          <li><a href="add-product.html">➕ Añadir producto</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🔄 Movimientos</a>
+        <ul class="submenu">
+          <li><a href="movements.html">📊 Ver movimientos</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🧾 Comprobantes</a>
+        <ul class="submenu">
+          <li><a href="receipts.html">📄 Ver comprobantes</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🤝 Proveedores</a>
+        <ul class="submenu">
+          <li><a href="providers.html">📋 Ver proveedores</a></li>
+          <li><a href="add-provider.html">➕ Añadir proveedor</a></li>
+        </ul>
+      </li>
+      <li><a href="users.html">👥 Usuarios</a></li>
+      <li><a href="roles.html">🔐 Roles y Permisos</a></li>
+    </ul>
+
+    <button id="logout" aria-label="Cerrar sesión">🚪 Cerrar sesión</button>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="main-content">
+    <header>
+      <button id="openMenu" class="menu-btn" aria-label="Abrir menú">☰</button>
+      <h1 id="pageTitle">➕ Registrar Nuevo Producto</h1>
+      <p>Agrega productos al inventario con toda la información necesaria</p>
+    </header>
+
+    <section class="content">
+      <!-- Formulario principal -->
+      <div class="card form-card">
+        <div class="form-header">
+          <h2>📦 Datos del Producto</h2>
+          <p style="color: #666; margin: 5px 0 0 0;">Completa la información requerida</p>
+        </div>
+
+        <form id="addProductForm" class="formulario">
+          <div class="form-group">
+            <label for="nombre"><span class="required-star">*</span> 🏷️ Nombre del producto:</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Ej: Pechuga de pollo" required />
+          </div>
+
+          <div class="form-group">
+            <label for="categoria"><span class="required-star">*</span> 📂 Categoría:</label>
+            <select id="categoria" name="categoria" required>
+              <option value="">Selecciona una categoría</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="descripcion">📝 Descripción:</label>
+            <textarea id="descripcion" name="descripcion" rows="3" placeholder="Detalles del producto..."></textarea>
+          </div>
+
+          <!-- NUEVOS CAMPOS DE PRECIOS -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="precioCompra"><span class="required-star">*</span> 💰 Precio de compra:</label>
+              <input type="number" id="precioCompra" name="precioCompra" min="0" step="0.01" value="0" placeholder="0.00" required />
+              <small style="color: #666;">Costo de adquisición</small>
+            </div>
+
+            <div class="form-group">
+              <label for="precioVenta"><span class="required-star">*</span> 💵 Precio de venta:</label>
+              <input type="number" id="precioVenta" name="precioVenta" min="0" step="0.01" value="0" placeholder="0.00" required />
+              <small style="color: #666;">Precio al cliente</small>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" id="cantidadInicialGroup">
+              <label for="cantidadInicial"><span class="required-star">*</span> 🔢 Cantidad inicial:</label>
+              <input type="number" id="cantidadInicial" name="cantidadInicial" min="0" value="0" required />
+              <small style="color: #666;">Solo al crear el producto</small>
+            </div>
+
+            <div class="form-group" id="stockActualGroup" style="display: none;">
+              <label for="stockActual">📊 Stock disponible:</label>
+              <input type="number" id="stockActual" name="stockActual" min="0" />
+              <small style="color: #666;">Cambiar actualizará el inventario</small>
+            </div>
+
+            <div class="form-group">
+              <label for="stockMinimo"><span class="required-star">*</span> 📉 Stock mínimo:</label>
+              <input type="number" id="stockMinimo" name="stockMinimo" min="0" value="5" required />
+              <small style="color: #666;">Alerta de reposición</small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="proveedor">🤝 Proveedor:</label>
+            <select id="proveedor" name="proveedor">
+              <option value="">Sin proveedor asignado</option>
+            </select>
+          </div>
+
+          <p id="error-msg" class="error" style="display: none;"></p>
+
+          <div class="form-actions">
+            <button type="submit" id="submitBtn" class="btn-guardar btn-submit">
+              <span class="btn-icon">💾</span> Guardar producto
+            </button>
+            <a href="products.html" class="btn-cancel">
+              <span class="btn-icon">❌</span> Cancelar
+            </a>
+          </div>
+        </form>
+      </div>
+
+      <!-- Tips adicionales -->
+      <div class="card tips-card">
+        <h3 style="margin: 0 0 10px 0; color: #1b263b;">💡 Consejos</h3>
+        <ul style="margin: 0; padding-left: 20px; color: #666; line-height: 1.8;">
+          <li>Define bien el stock mínimo para recibir alertas oportunas</li>
+          <li>Verifica que el precio de venta cubra el costo de compra</li>
+          <li>Agrega una descripción clara para facilitar búsquedas</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/menu.js"></script>
+  <script src="../js/add-product.js"></script>
+</body>
+</html>

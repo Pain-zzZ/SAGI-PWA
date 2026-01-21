@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proveedores - SAGI</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="icon" href="../resources/favicon.ico" type="image/x-icon" />
+</head>
+<body class="dashboard">
+
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2>SAGI</h2>
+      <button id="closeMenu" class="close-btn">✖</button>
+    </div>
+
+    <ul class="menu">
+      <li><a href="menu.html" class="menu-home">🏠 Inicio</a></li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">📋 Inventario</a>
+        <ul class="submenu">
+          <li><a href="products.html">📦 Ver productos</a></li>
+          <li><a href="add-product.html">➕ Añadir producto</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🔄 Movimientos</a>
+        <ul class="submenu">
+          <li><a href="movements.html">📊 Ver movimientos</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🧾 Comprobantes</a>
+        <ul class="submenu">
+          <li><a href="receipts.html">📄 Ver comprobantes</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🤝 Proveedores</a>
+        <ul class="submenu">
+          <li><a href="providers.html">📋 Ver proveedores</a></li>
+          <li><a href="add-provider.html">➕ Añadir proveedor</a></li>
+        </ul>
+      </li>
+      <li><a href="users.html">👥 Usuarios</a></li>
+      <li><a href="roles.html">🔐 Roles y Permisos</a></li>
+    </ul>
+
+    <button id="logout">🚪 Cerrar sesión</button>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="main-content">
+    <header>
+      <button id="openMenu" class="menu-btn">☰</button>
+      <h1>🤝 Gestión de Proveedores</h1>
+      <p>Administra la información de tus proveedores y sus productos</p>
+    </header>
+
+    <section class="content">
+      <!-- Estadísticas rápidas -->
+      <div class="dashboard-stats">
+        <div class="stat-card">
+          <h3>🏢 Total Proveedores</h3>
+          <p class="stat-number" id="totalProveedores">0</p>
+        </div>
+        <div class="stat-card">
+          <h3>✅ Proveedores Activos</h3>
+          <p class="stat-number" id="proveedoresActivos">0</p>
+        </div>
+        <div class="stat-card">
+          <h3>📦 Productos Asociados</h3>
+          <p class="stat-number" id="productosAsociados">0</p>
+        </div>
+        <div class="stat-card">
+          <h3>💰 Compras Este Mes</h3>
+          <p class="stat-number" id="comprasMes">$0</p>
+        </div>
+      </div>
+
+      <!-- Filtros -->
+      <div class="card filters-card">
+        <div class="filters-header">
+          <h3>🔍 Filtros de Búsqueda</h3>
+          <p style="color: #666; font-size: 0.9rem; margin: 5px 0 0 0;">Encuentra proveedores rápidamente</p>
+        </div>
+        
+        <div class="filters-grid">
+          <div class="filter-group">
+            <label for="searchProvider">
+              <span class="filter-icon">🔎</span>
+              Buscar:
+            </label>
+            <input 
+              type="text" 
+              id="searchProvider" 
+              placeholder="Nombre, teléfono, correo..." 
+              class="filter-input"
+            />
+          </div>
+          
+          <div class="filter-group">
+            <label for="filterEstado">
+              <span class="filter-icon">🏷️</span>
+              Estado:
+            </label>
+            <select id="filterEstado" class="filter-select">
+              <option value="">Todos</option>
+              <option value="activo">✅ Activos</option>
+              <option value="inactivo">❌ Inactivos</option>
+            </select>
+          </div>
+
+          <div class="filter-actions">
+            <button id="refreshBtn" class="btn-filter">
+              <span class="btn-icon">🔄</span>
+              Actualizar
+            </button>
+            <button id="clearFiltersBtn" class="btn-filter-secondary">
+              <span class="btn-icon">🧹</span>
+              Limpiar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Acciones -->
+      <div class="acciones">
+        <a href="add-provider.html" class="btn-action">➕ Añadir Proveedor</a>
+        <button id="editarBtn">✏️ Editar</button>
+        <button id="eliminarBtn">🗑️ Eliminar</button>
+        <button id="reactivarBtn" style="display:none;">♻️ Reactivar</button>
+        <button id="verDetalleBtn">👁️ Ver Detalle</button>
+      </div>
+
+      <!-- Tabla de proveedores -->
+      <div class="card">
+        <div class="table-header">
+          <h3>📋 Lista de Proveedores</h3>
+          <p id="resultadosCount" style="color: #666; font-size: 0.9rem; margin: 5px 0 0 0;">
+            Mostrando <strong id="countProveedores">0</strong> proveedores
+          </p>
+        </div>
+
+        <div class="table-container">
+          <table id="proveedoresTable">
+            <thead>
+              <tr>
+                <th style="width: 50px;"></th>
+                <th style="width: 60px;">ID</th>
+                <th>Nombre</th>
+                <th style="width: 140px;">Teléfono</th>
+                <th>Correo Electrónico</th>
+                <th style="width: 120px; text-align: center;">Productos</th>
+                <th style="width: 120px; text-align: center;">Compras</th>
+                <th style="width: 100px;">Estado</th>
+              </tr>
+            </thead>
+            <tbody id="proveedoresTableBody">
+              <tr>
+                <td colspan="8" style="text-align: center; padding: 40px;">
+                  <div class="loading"></div>
+                  <p style="margin-top: 10px;">Cargando proveedores...</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-footer">
+          <p style="color: #666; font-size: 0.85rem;">
+            💡 Selecciona un proveedor para ver opciones de edición
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/menu.js"></script>
+  <script src="../js/providers.js"></script>
+</body>
+</html>

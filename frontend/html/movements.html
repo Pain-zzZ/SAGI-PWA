@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movimientos de Inventario - SAGI</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="icon" href="../resources/favicon.ico" type="image/x-icon" />
+</head>
+<body class="dashboard">
+
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2>SAGI</h2>
+      <button id="closeMenu" class="close-btn">✖</button>
+    </div>
+
+    <ul class="menu">
+      <li><a href="menu.html" class="menu-home">🏠 Inicio</a></li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">📋 Inventario</a>
+        <ul class="submenu">
+          <li><a href="products.html">📦 Ver productos</a></li>
+          <li><a href="add-product.html">➕ Añadir producto</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🔄 Movimientos</a>
+        <ul class="submenu">
+          <li><a href="movements.html">📊 Ver movimientos</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🧾 Comprobantes</a>
+        <ul class="submenu">
+          <li><a href="receipts.html">📄 Ver comprobantes</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🤝 Proveedores</a>
+        <ul class="submenu">
+          <li><a href="providers.html">📋 Ver proveedores</a></li>
+          <li><a href="add-provider.html">➕ Añadir proveedor</a></li>
+        </ul>
+      </li>
+      <li><a href="users.html">👥 Usuarios</a></li>
+      <li><a href="roles.html">🔐 Roles y Permisos</a></li>
+    </ul>
+
+    <button id="logout">🚪 Cerrar sesión</button>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="main-content">
+    <header>
+      <button id="openMenu" class="menu-btn">☰</button>
+      <h1>🔄 Historial de Movimientos</h1>
+      <p>Registro completo de entradas, salidas y cambios en el inventario</p>
+    </header>
+
+    <section class="content">
+      <!-- Estadísticas rápidas -->
+      <div class="dashboard-stats">
+        <div class="stat-card">
+          <h3>📊 Total Movimientos</h3>
+          <p class="stat-number" id="totalMovimientos">0</p>
+        </div>
+        <div class="stat-card">
+          <h3>📥 Entradas</h3>
+          <p class="stat-number" id="totalEntradas">0</p>
+        </div>
+        <div class="stat-card">
+          <h3>📤 Salidas</h3>
+          <p class="stat-number" id="totalSalidas">0</p>
+        </div>
+        <div class="stat-card">
+          <h3>🕒 Hoy</h3>
+          <p class="stat-number" id="movimientosHoy">0</p>
+        </div>
+      </div>
+
+      <!-- Filtros mejorados con estilo -->
+      <div class="card filters-card">
+        <div class="filters-header">
+          <h3>🔍 Filtros de Búsqueda</h3>
+          <p style="color: #666; font-size: 0.9rem; margin: 5px 0 0 0;">Personaliza tu búsqueda para encontrar movimientos específicos</p>
+        </div>
+        
+        <div class="filters-grid">
+          <div class="filter-group">
+            <label for="searchMovement">
+              <span class="filter-icon">🔎</span>
+              Buscar producto:
+            </label>
+            <input 
+              type="text" 
+              id="searchMovement" 
+              placeholder="Ej: Pechuga de pollo..." 
+              class="filter-input"
+            />
+          </div>
+          
+          <div class="filter-group">
+            <label for="filterTipo">
+              <span class="filter-icon">📑</span>
+              Tipo de movimiento:
+            </label>
+            <select id="filterTipo" class="filter-select">
+              <option value="">Todos los tipos</option>
+              <option value="entrada">📥 Entradas</option>
+              <option value="salida">📤 Salidas</option>
+              <option value="ajuste">⚖️ Ajustes</option>
+              <option value="edicion">✏️ Ediciones</option>
+              <option value="inactivacion">🗑️ Inactivaciones</option>
+              <option value="reactivacion">♻️ Reactivaciones</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filterFechaInicio">
+              <span class="filter-icon">📅</span>
+              Fecha desde:
+            </label>
+            <input 
+              type="date" 
+              id="filterFechaInicio" 
+              class="filter-input"
+            />
+          </div>
+
+          <div class="filter-group">
+            <label for="filterFechaFin">
+              <span class="filter-icon">📅</span>
+              Fecha hasta:
+            </label>
+            <input 
+              type="date" 
+              id="filterFechaFin" 
+              class="filter-input"
+            />
+          </div>
+        </div>
+
+        <div class="filter-actions">
+          <button id="refreshBtn" class="btn-filter">
+            <span class="btn-icon">🔄</span>
+            Buscar
+          </button>
+          <button id="clearFiltersBtn" class="btn-filter-secondary">
+            <span class="btn-icon">🧹</span>
+            Limpiar Filtros
+          </button>
+        </div>
+      </div>
+
+      <!-- Botón para registrar nuevo movimiento -->
+      <div class="acciones">
+        <a href="add-movement.html" class="btn-action">➕ Registrar Movimiento Manual</a>
+        <button id="exportBtn" class="btn-action" style="background: #28a745;">📊 Exportar a Excel</button>
+      </div>
+
+      <!-- Tabla de movimientos mejorada -->
+      <div class="card">
+        <div class="table-header">
+          <h3>📋 Historial de Movimientos</h3>
+          <p id="resultadosCount" style="color: #666; font-size: 0.9rem; margin: 5px 0 0 0;">
+            Mostrando <strong id="countMovimientos">0</strong> movimientos
+          </p>
+        </div>
+
+        <div class="table-container">
+          <table id="movimientosTable">
+            <thead>
+              <tr>
+                <th style="width: 60px;">ID</th>
+                <th style="width: 140px;">Fecha y Hora</th>
+                <th style="width: 120px;">Tipo</th>
+                <th>Producto</th>
+                <th style="width: 100px; text-align: center;">Cantidad</th>
+                <th style="width: 150px;">Usuario</th>
+                <th>Descripción</th>
+              </tr>
+            </thead>
+            <tbody id="movimientosTableBody">
+              <tr>
+                <td colspan="7" style="text-align: center; padding: 40px;">
+                  <div class="loading"></div>
+                  <p style="margin-top: 10px;">Cargando movimientos...</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Paginación (opcional para futuro) -->
+        <div class="table-footer">
+          <p style="color: #666; font-size: 0.85rem;">
+            💡 Mostrando los últimos 100 movimientos
+          </p>
+        </div>
+      </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/menu.js"></script>
+  <script src="../js/movements.js"></script>
+</body>
+</html>

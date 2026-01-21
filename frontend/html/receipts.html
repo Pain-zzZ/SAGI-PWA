@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Comprobantes - SAGI</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="icon" href="../resources/favicon.ico" type="image/x-icon" />
+</head>
+<body class="dashboard">
+
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2>SAGI</h2>
+      <button id="closeMenu" class="close-btn">✖</button>
+    </div>
+
+    <ul class="menu">
+      <li><a href="menu.html" class="menu-home">🏠 Inicio</a></li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">📋 Inventario</a>
+        <ul class="submenu">
+          <li><a href="products.html">📦 Ver productos</a></li>
+          <li><a href="add-product.html">➕ Añadir producto</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🔄 Movimientos</a>
+        <ul class="submenu">
+          <li><a href="movements.html">📊 Ver movimientos</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🧾 Comprobantes</a>
+        <ul class="submenu">
+          <li><a href="receipts.html">📄 Ver comprobantes</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🤝 Proveedores</a>
+        <ul class="submenu">
+          <li><a href="providers.html">📋 Ver proveedores</a></li>
+          <li><a href="add-provider.html">➕ Añadir proveedor</a></li>
+        </ul>
+      </li>
+      <li><a href="users.html">👥 Usuarios</a></li>
+      <li><a href="roles.html">🔐 Roles y Permisos</a></li>
+    </ul>
+
+    <button id="logout">🚪 Cerrar sesión</button>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="main-content">
+    <header>
+      <button id="openMenu" class="menu-btn">☰</button>
+      <h1>🧾 Gestión de Comprobantes</h1>
+      <p>Registro y control de documentos fiscales y administrativos</p>
+    </header>
+
+    <section class="content">
+      <!-- Panel de Análisis Financiero -->
+      <div class="card" style="background: linear-gradient(135deg, #3572e2 0%, #5e8cd1 100%); color: white; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+          <div>
+            <h3 style="margin: 0; color: white;">📊 Análisis Financiero</h3>
+            <p style="margin: 5px 0 0 0; opacity: 0.9;" id="periodoTexto">Mes actual</p>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <select id="rangoFecha" class="filter-select" style="background: white; color: #333;">
+              <option value="mes_actual">Mes actual</option>
+              <option value="mes_anterior">Mes anterior</option>
+              <option value="trimestre">Último trimestre</option>
+              <option value="ano_actual">Año actual</option>
+              <option value="personalizado">Personalizado</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="analisis-grid">
+          <!-- Ventas -->
+          <div class="analisis-card ventas">
+            <div class="analisis-icon">📤</div>
+            <div>
+              <div class="analisis-label">Ventas</div>
+              <div class="analisis-valor" id="ventasTotal">$0</div>
+              <div class="analisis-detalle">
+                <span id="ventasCantidad">0</span> facturas
+              </div>
+            </div>
+          </div>
+
+          <!-- Compras -->
+          <div class="analisis-card compras">
+            <div class="analisis-icon">📥</div>
+            <div>
+              <div class="analisis-label">Compras</div>
+              <div class="analisis-valor" id="comprasTotal">$0</div>
+              <div class="analisis-detalle">
+                <span id="comprasCantidad">0</span> facturas
+              </div>
+            </div>
+          </div>
+
+          <!-- Pagos Recibidos -->
+          <div class="analisis-card recibos">
+            <div class="analisis-icon">💰</div>
+            <div>
+              <div class="analisis-label">Pagos Recibidos</div>
+              <div class="analisis-valor" id="recibosTotal">$0</div>
+              <div class="analisis-detalle">
+                <span id="recibosCantidad">0</span> recibos
+              </div>
+            </div>
+          </div>
+
+          <!-- Utilidad Neta -->
+          <div class="analisis-card utilidad">
+            <div class="analisis-icon">📈</div>
+            <div>
+              <div class="analisis-label">Utilidad Neta</div>
+              <div class="analisis-valor" id="utilidadNeta">$0</div>
+              <div class="analisis-detalle">
+                Margen: <span id="margenUtilidad">0</span>%
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detalles adicionales -->
+        <div class="detalles-financieros">
+          <div class="detalle-item">
+            <span>Notas de Crédito:</span>
+            <strong id="notasCreditoTotal">$0</strong>
+            <small>(<span id="notasCreditoCantidad">0</span>)</small>
+          </div>
+          <div class="detalle-item">
+            <span>Notas de Débito:</span>
+            <strong id="notasDebitoTotal">$0</strong>
+            <small>(<span id="notasDebitoCantidad">0</span>)</small>
+          </div>
+          <div class="detalle-item">
+            <span>Utilidad Bruta:</span>
+            <strong id="utilidadBruta">$0</strong>
+          </div>
+          <div class="detalle-item">
+            <span>Total Comprobantes:</span>
+            <strong id="totalComprobantesPeriodo">0</strong>
+            <small>(<span id="comprobantesAnulados">0</span> anulados)</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Productos -->
+      <div class="card" id="topProductosCard" style="display: none;">
+        <h3 style="margin: 0 0 15px 0;">🏆 Productos Más Vendidos (Periodo)</h3>
+        <div id="topProductosContainer"></div>
+      </div>
+
+      <!-- Filtros -->
+      <div class="card filters-card">
+        <div class="filters-header">
+          <h3>🔍 Filtros de Búsqueda</h3>
+          <p style="color: #666; font-size: 0.9rem; margin: 5px 0 0 0;">Personaliza tu búsqueda para encontrar comprobantes específicos</p>
+        </div>
+        
+        <div class="filters-grid">
+          <div class="filter-group">
+            <label for="searchReceipt">
+              <span class="filter-icon">🔎</span>
+              Buscar:
+            </label>
+            <input 
+              type="text" 
+              id="searchReceipt" 
+              placeholder="Número, cliente..." 
+              class="filter-input"
+            />
+          </div>
+          
+          <div class="filter-group">
+            <label for="filterTipo">
+              <span class="filter-icon">📑</span>
+              Tipo:
+            </label>
+            <select id="filterTipo" class="filter-select">
+              <option value="">Todos los tipos</option>
+              <option value="factura_venta">📤 Factura de Venta</option>
+              <option value="factura_compra">📥 Factura de Compra</option>
+              <option value="recibo">🧾 Recibo</option>
+              <option value="nota_credito">📝 Nota de Crédito</option>
+              <option value="nota_debito">📝 Nota de Débito</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filterEstado">
+              <span class="filter-icon">🏷️</span>
+              Estado:
+            </label>
+            <select id="filterEstado" class="filter-select">
+              <option value="">Todos los estados</option>
+              <option value="emitido">✅ Emitido</option>
+              <option value="pagado">💰 Pagado</option>
+              <option value="anulado">❌ Anulado</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filterFechaInicio">
+              <span class="filter-icon">📅</span>
+              Desde:
+            </label>
+            <input type="date" id="filterFechaInicio" class="filter-input" />
+          </div>
+
+          <div class="filter-group">
+            <label for="filterFechaFin">
+              <span class="filter-icon">📅</span>
+              Hasta:
+            </label>
+            <input type="date" id="filterFechaFin" class="filter-input" />
+          </div>
+        </div>
+
+        <div class="filter-actions">
+          <button id="refreshBtn" class="btn-filter">
+            <span class="btn-icon">🔄</span>
+            Buscar
+          </button>
+          <button id="clearFiltersBtn" class="btn-filter-secondary">
+            <span class="btn-icon">🧹</span>
+            Limpiar
+          </button>
+        </div>
+      </div>
+
+      <!-- Acciones -->
+      <div class="acciones">
+        <a href="add-receipt.html" class="btn-action">➕ Generar Comprobante</a>
+        <button id="exportBtn" class="btn-action" style="background: #28a745;">📊 Exportar</button>
+      </div>
+
+      <!-- Tabla de comprobantes -->
+      <div class="card">
+        <div class="table-header">
+          <h3>📋 Comprobantes Registrados</h3>
+          <p id="resultadosCount" style="color: #666; font-size: 0.9rem; margin: 5px 0 0 0;">
+            Mostrando <strong id="countComprobantes">0</strong> comprobantes
+          </p>
+        </div>
+
+        <div class="table-container">
+          <table id="comprobantesTable">
+            <thead>
+              <tr>
+                <th style="width: 120px;">Número</th>
+                <th style="width: 130px;">Fecha</th>
+                <th style="width: 150px;">Tipo</th>
+                <th>Cliente/Proveedor</th>
+                <th style="width: 120px; text-align: right;">Total</th>
+                <th style="width: 100px;">Estado</th>
+                <th style="width: 120px;">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="comprobantesTableBody">
+              <tr>
+                <td colspan="7" style="text-align: center; padding: 40px;">
+                  <div class="loading"></div>
+                  <p style="margin-top: 10px;">Cargando comprobantes...</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/menu.js"></script>
+  <script src="../js/receipts.js"></script>
+</body>
+</html>

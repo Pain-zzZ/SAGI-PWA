@@ -1,0 +1,13 @@
+# Ignorar variables de entorno
+.env
+backend/.env
+frontend/.env
+
+# Ignorar dependencias
+node_modules/
+
+# Ignorar logs
+*.log
+
+# Ignorar archivo de hash
+backend/generate-hash.js

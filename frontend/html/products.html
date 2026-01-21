@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ver Productos - SAGI</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="icon" href="../resources/favicon.ico" type="image/x-icon" />
+</head>
+<body class="dashboard">
+
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2>SAGI</h2>
+      <button id="closeMenu" class="close-btn">✖</button>
+    </div>
+
+    <ul class="menu">
+      <li><a href="menu.html" class="menu-home">🏠 Inicio</a></li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">📋 Inventario</a>
+        <ul class="submenu">
+          <li><a href="products.html">📦 Ver productos</a></li>
+          <li><a href="add-product.html">➕ Añadir producto</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🔄 Movimientos</a>
+        <ul class="submenu">
+          <li><a href="movements.html">📊 Ver movimientos</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🧾 Comprobantes</a>
+        <ul class="submenu">
+          <li><a href="receipts.html">📄 Ver comprobantes</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🤝 Proveedores</a>
+       <ul class="submenu">
+          <li><a href="providers.html">📋 Ver proveedores</a></li>
+          <li><a href="add-provider.html">➕ Añadir proveedor</a></li>
+        </ul>
+      </li>
+      <li><a href="users.html">👥 Usuarios</a></li>
+      <li><a href="roles.html">🔐 Roles y Permisos</a></li>
+    </ul>
+
+    <button id="logout">🚪 Cerrar sesión</button>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="main-content">
+    <header>
+      <button id="openMenu" class="menu-btn">☰</button>
+      <h1>📦 Productos en Inventario</h1>
+    </header>
+
+    <section class="content">
+      <div class="filters">
+        <input type="text" id="searchProduct" placeholder="🔍 Buscar producto..." />
+        <select id="filterCategory">
+          <option value="">Todas las categorías</option>
+        </select>
+        
+        <select id="filterStatus">
+          <option value="">Todos los estados</option>
+          <option value="Disponible">✅ Disponibles</option>
+          <option value="No disponible">⚠️ No disponibles</option>
+          <option value="Inactivo">❌ Inactivos</option>
+        </select>
+        <button id="refreshBtn" class="btn-refresh">🔄 Actualizar</button>
+      </div>
+
+      <div class="acciones">
+        <a href="add-product.html" class="btn-action">➕ Añadir Producto</a>
+        <button id="editarBtn">✏️ Editar</button>
+        <button id="eliminarBtn">🗑️ Eliminar</button>
+        <button id="reactivarBtn" style="display:none;">♻️ Reactivar</button>
+        <button id="verDetalleBtn">👁️ Ver detalle</button>
+      </div>
+
+      <div class="table-container">
+        <table id="productosTable">
+          <thead>
+            <tr>
+              <th></th>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Categoría</th>
+              <th>Stock Actual</th>
+              <th>Stock Mínimo</th>
+              <th>Precio Compra</th>
+              <th>Precio Venta</th>
+              <th>Proveedor</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="productosTableBody">
+            <tr>
+              <td colspan="9" style="text-align: center; padding: 20px;">
+                Cargando productos...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/menu.js"></script>
+  <script src="../js/products.js"></script>
+</body>
+</html>

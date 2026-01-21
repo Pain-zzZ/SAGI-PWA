@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roles y Permisos - SAGI</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="icon" href="../resources/favicon.ico" type="image/x-icon" />
+</head>
+<body class="dashboard">
+
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h2>SAGI</h2>
+      <button id="closeMenu" class="close-btn">✖</button>
+    </div>
+
+    <ul class="menu">
+      <li><a href="menu.html" class="menu-home">🏠 Inicio</a></li>
+      
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">📋 Inventario</a>
+        <ul class="submenu">
+          <li><a href="products.html">📦 Ver productos</a></li>
+          <li><a href="add-product.html">➕ Añadir producto</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🔄 Movimientos</a>
+        <ul class="submenu">
+          <li><a href="movements.html">📊 Ver movimientos</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🧾 Comprobantes</a>
+        <ul class="submenu">
+          <li><a href="receipts.html">📄 Ver comprobantes</a></li>
+        </ul>
+      </li>
+      <li class="has-submenu">
+        <a href="#" class="submenu-toggle">🤝 Proveedores</a>
+        <ul class="submenu">
+          <li><a href="providers.html">📋 Ver proveedores</a></li>
+          <li><a href="add-provider.html">➕ Añadir proveedor</a></li>
+        </ul>
+      </li>
+      <li><a href="users.html">👥 Usuarios</a></li>
+      <li><a href="roles.html">🔐 Roles y Permisos</a></li>
+    </ul>
+
+    <button id="logout">🚪 Cerrar sesión</button>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="main-content">
+    <header>
+      <button id="openMenu" class="menu-btn">☰</button>
+      <h1>🔐 Roles y Permisos</h1>
+      <p>Administra los roles del sistema y sus permisos</p>
+    </header>
+
+    <section class="content">
+      <!-- Estadísticas rápidas -->
+      <div class="dashboard-stats">
+        <div class="stat-card">
+          <h3>📊 Total Roles</h3>
+          <p class="stat-number" id="totalRoles">0</p>
+        </div>
+        <div class="stat-card success">
+          <h3>✅ Roles Activos</h3>
+          <p class="stat-number" id="rolesActivos">0</p>
+        </div>
+        <div class="stat-card info">
+          <h3>👥 Total Usuarios</h3>
+          <p class="stat-number" id="totalUsuarios">0</p>
+        </div>
+        <div class="stat-card warning">
+          <h3>📈 Rol Más Usado</h3>
+          <p class="stat-number" id="rolMasUsado" style="font-size: 1.2rem;">-</p>
+        </div>
+      </div>
+
+      <!-- Información -->
+      <div class="card info-card">
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <div style="font-size: 2.5rem;">ℹ️</div>
+          <div>
+            <h3 style="margin: 0 0 5px 0; color: #1b263b;">Información sobre roles</h3>
+            <ul style="margin: 5px 0; padding-left: 20px; color: #666;">
+              <li>Los roles determinan qué acciones puede realizar cada usuario en el sistema</li>
+              <li>Los permisos de cada rol están predefinidos y optimizados para la seguridad</li>
+              <li>Puedes editar el nombre y descripción de cada rol según tus necesidades</li>
+              <li>No se puede desactivar el rol de Administrador</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Acciones -->
+      <div class="acciones">
+        <button id="editarBtn">✏️ Editar</button>
+        <button id="eliminarBtn">🗑️ Eliminar</button>
+        <button id="reactivarBtn" style="display:none;">♻️ Reactivar</button>
+        <button id="verDetalleBtn">👁️ Ver Detalle</button>
+        <button id="refreshBtn">🔄 Actualizar</button>
+      </div>
+
+      <!-- Tabla de roles -->
+      <div class="card">
+        <div class="table-header">
+          <h3>📋 Lista de Roles</h3>
+          <p id="resultadosCount" style="color: #666; font-size: 0.9rem; margin: 5px 0 0 0;">
+            Mostrando <strong id="countRoles">0</strong> roles
+          </p>
+        </div>
+
+        <div class="table-container">
+          <table id="rolesTable">
+            <thead>
+              <tr>
+                <th style="width: 50px;"></th>
+                <th style="width: 60px;">ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th style="width: 120px; text-align: center;">Usuarios</th>
+                <th style="width: 150px; text-align: center;">Permisos</th>
+                <th style="width: 100px;">Estado</th>
+              </tr>
+            </thead>
+            <tbody id="rolesTableBody">
+              <tr>
+                <td colspan="7" style="text-align: center; padding: 40px;">
+                  <div class="loading"></div>
+                  <p style="margin-top: 10px;">Cargando roles...</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-footer">
+          <p style="color: #666; font-size: 0.85rem;">
+            💡 Selecciona un rol para ver opciones de edición
+          </p>
+        </div>
+      </div>
+
+      <!-- Distribución de usuarios por rol -->
+      <div class="card">
+        <h3>📊 Distribución de Usuarios por Rol</h3>
+        <div id="distribucionChart" style="margin-top: 20px;">
+          <p style="text-align: center; color: #666;">Cargando gráfico...</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/menu.js"></script>
+  <script src="../js/roles.js"></script>
+</body>
+</html>
