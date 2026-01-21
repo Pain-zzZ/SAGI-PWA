@@ -1,104 +1,37 @@
-📦 SAGI - Sistema Automático de Gestión de Inventarios
+# SAGI PWA
+Sistema de Administración de Gestión de Inventarios (SAGI) desarrollado como Progressive Web App (PWA).
 
+## 📌 Objetivo
+Este proyecto corresponde a la evidencia **GA8-220501096-AA2-EV02** del SENA.  
+El propósito es implementar módulos móviles orientados a Android mediante una PWA, aplicando buenas prácticas de desarrollo, separación de capas y soporte offline.
 
+## 🚀 Características
+- Login y gestión de usuarios.
+- Administración de roles.
+- CRUD de productos, proveedores, movimientos y recibos.
+- Manifest.json para instalación como aplicación independiente.
+- Service Worker para funcionamiento offline.
+- Compatible con dispositivos móviles.
 
-📌 Descripción del Proyecto
-
-SAGI (Sistema Automático de Gestión de Inventarios) es una aplicación web desarrollada como proyecto formativo, cuyo objetivo es facilitar el control, registro y gestión de inventarios dentro de una organización.  
-
-El sistema permite administrar productos, movimientos de inventario, usuarios y roles, garantizando trazabilidad, seguridad y control de la información.
-
-
-
-Este proyecto fue desarrollado aplicando conceptos de:
-
-\- Ingeniería de software
-
-\- Bases de datos relacionales y no relacionales
-
-\- Desarrollo frontend y backend
-
-\- Servicios web (API REST)
-
-\- Versionamiento con Git
-
+## ⚙️ Instalación y uso
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/Pain-zzZ/SAGI-PWA.git
 
 
 ---
 
+## 📌 Nota importante sobre el funcionamiento
 
+Si descargas el proyecto y abres `http://localhost:3000/html/index.html`, la **interfaz gráfica** funciona correctamente porque los archivos HTML, CSS y JS están incluidos en el proyecto y el navegador los carga.  
+Además, gracias al **Service Worker**, las pantallas pueden mostrarse incluso en modo **offline**.
 
-🎯 Objetivo del Proyecto
+- **Sin backend/base de datos:**  
+  La aplicación abre, se instala como PWA y permite navegar entre módulos, pero los listados estarán vacíos o mostrarán errores al intentar consultar datos.
 
-Desarrollar una solución web que permita:
+- **Con backend/base de datos activos:**  
+  La aplicación abre igual, pero además carga y guarda información real desde la API, permitiendo el funcionamiento completo de los módulos (productos, usuarios, roles, recibos, etc.).
 
-\- Gestionar inventarios de forma eficiente
-
-\- Controlar entradas y salidas de productos
-
-\- Administrar usuarios con roles y permisos
-
-\- Implementar autenticación segura
-
-\- Aplicar buenas prácticas de desarrollo y versionamiento
-
-
-
----
-
-
-
-🛠️ Tecnologías Utilizadas
-
-
-
-Frontend
-
-\- HTML5  
-
-\- CSS3  
-
-\- JavaScript  
-
-
-
-Backend
-
-\- Node.js  
-
-\- Express.js  
-
-
-
-Base de Datos
-
-\- MySQL  
-
-
-
-Seguridad
-
-\- Autenticación con JWT
-
-\- Encriptación de contraseñas con bcrypt
-
-
-
-Herramientas
-
-\- Git (control de versiones)
-
-\- GitHub (repositorio remoto)
-
-\- MySQL Workbench
-
-\- Visual Studio Code
-
-\- Postman (pruebas de API)
-
-
-
----
 
 
 
